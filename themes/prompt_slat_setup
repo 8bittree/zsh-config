@@ -1,0 +1,42 @@
+prompt_slat_precmd () {
+	setopt noxtrace noksharrays localoptions
+
+	local termwidth
+	(( termwidth = ${COLUMNS} - 1 ))
+
+	pr_pwdlen=""
+	fillbar=""
+
+	local promptsize=${#${(%):-┏┫%n┃%m┃┣┓}}
+	local pwdsize=${#${(%):-%~}}
+
+	if [[ "$promptsize + $pwdsize" -gt $termwidth ]]; then
+		((pr_pwdlen=$termwidth - $promptsize))
+	else
+		fillbar="\${(l.(($termwidth - ($promptsize + $pwdsize)))..━.)}"
+	fi
+}
+
+prompt_slat_setup () {
+
+
+	autoload -Uz add-zsh-hook
+	autoload -Uz colors && colors
+
+	PROMPT='
+%F{blue}┏┫%(!.%S%F{red}.%F{green})%n%s%F{blue}┃%F{cyan}%m\
+%F{blue}┃%F{yellow}%$pr_pwdlen<…<%~%<<%F{blue}┣${(e)fillbar}\
+┓\
+
+┗┓%(2L.%F{yellow}%L%F{blue}╻.)%(?..%F{red}%?%F{blue}╻)\
+%(!.%F{red}.%F{cyan})%#%F{blue}┏%F{blue}❯%F{cyan}❯%F{green}❯%f '
+	RPROMPT='%F{blue}┓%F{magenta}%D%F{blue}╻%F{magenta}%T%F{blue}┏┛%f'
+
+	prompt_opts=()
+	prompt_opts+=cr
+	prompt_opts+=subst
+	prompt_opts+=percent
+	add-zsh-hook precmd prompt_slat_precmd
+}
+
+prompt_slat_setup "$@"
