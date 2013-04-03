@@ -29,8 +29,9 @@ prompt_slat_setup () {
 ┓\
 
 ┗┓%(2L.%F{yellow}%L%F{blue}╻.)%(?..%F{red}%?%F{blue}╻)\
-%(!.%F{red}.%F{cyan})%#%F{blue}┏%F{blue}❯%F{cyan}❯%F{green}❯%f '
+%(!.%F{red}.%F{cyan})%#%F{blue}┏❯%F{cyan}❯%F{green}❯%f '
 	RPROMPT='%F{blue}┓%F{magenta}%D%F{blue}╻%F{magenta}%T%F{blue}┏┛%f'
+	PS2='%F{blue} ┃%F{green}%_%F{blue}┣❯%F{cyan}❯%F{green}❯%f '
 
 	prompt_opts=()
 	prompt_opts+=cr
