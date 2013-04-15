@@ -67,3 +67,8 @@ prompt slat
 #                                 Aliases                                 #
 ###########################################################################
 
+# If herbstluftwm is installed, make it easier to control
+if which herbstclient >/dev/null 2>&1; then
+	alias hc=herbstclient
+fi
+
