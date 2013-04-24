@@ -1,3 +1,12 @@
+# General style inspired by
+# http://aperiodic.net/phil/prompt/
+# 
+# Untracked files check for git repositories from
+# http://briancarper.net/blog/570/
+#
+# Git branch status from
+# http://sebastiancelis.com/2009/11/16/zsh-prompt-git-users/
+
 +vi-git-logo () {
 	hook_com[vcs]=±
 }
