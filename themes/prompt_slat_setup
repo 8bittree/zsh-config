@@ -1,3 +1,7 @@
++vi-git-logo () {
+	hook_com[vcs]=±
+}
+
 prompt_slat_precmd () {
 	setopt noxtrace noksharrays localoptions
 
@@ -7,7 +11,7 @@ prompt_slat_precmd () {
 	pr_pwdlen=""
 	fillbar=""
 
-	local promptsize=${#${(%):-┏┫%n┃%m┃┣┓}}
+	local promptsize=${#${(%):-┏┫%n┃%m┣┫┣┓}}
 	local pwdsize=${#${(%):-%~}}
 
 	if [[ "$promptsize + $pwdsize" -gt $termwidth ]]; then
@@ -15,20 +19,35 @@ prompt_slat_precmd () {
 	else
 		fillbar="\${(l.(($termwidth - ($promptsize + $pwdsize)))..━.)}"
 	fi
+
+	# check for untracked files in git repositories
+	if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then\
+		zstyle ':vcs_info:git*' formats "%F{magenta}%s%F{blue}╻\
+%F{cyan}%b%c%u%F{blue}╻"
+	else
+		zstyle ':vcs_info:git*' formats "%F{magenta}%s%F{blue}╻\
+%F{cyan}%b%c%u%F{red}●%F{blue}╻"
+	fi
+	vcs_info
 }
 
 prompt_slat_setup () {
 
-
 	autoload -Uz add-zsh-hook
 	autoload -Uz colors && colors
+	autoload -Uz vcs_info
+
+	zstyle ':vcs_info:git+set-message:*' hooks git-logo
+	zstyle ':vcs_info:*' stagedstr '%F{green}●'
+	zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
+	zstyle ':vcs_info:*' check-for-changes true
 
 	PROMPT='
 %F{blue}┏┫%(!.%S%F{red}.%F{green})%n%s%F{blue}┃%F{cyan}%m\
-%F{blue}┃%F{yellow}%$pr_pwdlen<…<%~%<<%F{blue}┣${(e)fillbar}\
+%F{blue}┣${(e)fillbar}┫%F{yellow}%$pr_pwdlen<…<%~%<<%F{blue}┣\
 ┓\
 
-┗┓%(2L.%F{yellow}%L%F{blue}╻.)%(?..%F{red}%?%F{blue}╻)\
+┗┓${vcs_info_msg_0_}%(2L.%F{yellow}%L%F{blue}╻.)%(?..%F{red}%?%F{blue}╻)\
 %(!.%F{red}.%F{cyan})%#%F{blue}┏❯%F{cyan}❯%F{green}❯%f '
 	RPROMPT='%F{blue}┓%F{magenta}%D%F{blue}╻%F{magenta}%T%F{blue}┏┛%f'
 	PS2='%F{blue} ┃%F{green}%_%F{blue}┣❯%F{cyan}❯%F{green}❯%f '
