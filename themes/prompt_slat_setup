@@ -2,6 +2,23 @@
 	hook_com[vcs]=±
 }
 
+git-branch-status () {
+	local st="$(git status 2>/dev/null)"
+	if [[ -n "$st" ]]; then
+		local -a arr
+		arr=(${(f)st})
+		if [[ $arr[2] =~ 'Your branch is' ]]; then
+			if [[ $arr[2] =~ ' ahead ' ]]; then
+				echo '%F{green}⬆'
+			elif [[ $arr[2] =~ ' behind ' ]]; then
+				echo '%F{yellow}⬇'
+			elif [[ $arr[2] =~ ' diverged ' ]]; then
+				echo '%F{red}⇅'
+			fi
+		fi
+	fi
+}
+
 prompt_slat_precmd () {
 	setopt noxtrace noksharrays localoptions
 
@@ -22,10 +39,10 @@ prompt_slat_precmd () {
 
 	# check for untracked files in git repositories
 	if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then\
-		zstyle ':vcs_info:git*' formats "%F{magenta}%s%F{blue}╻\
+		zstyle ':vcs_info:git*' formats "%F{magenta}%s%F{blue}╻$(git-branch-status)\
 %F{cyan}%b%c%u%F{blue}╻"
 	else
-		zstyle ':vcs_info:git*' formats "%F{magenta}%s%F{blue}╻\
+		zstyle ':vcs_info:git*' formats "%F{magenta}%s%F{blue}╻$(git-branch-status)\
 %F{cyan}%b%c%u%F{red}●%F{blue}╻"
 	fi
 	vcs_info
