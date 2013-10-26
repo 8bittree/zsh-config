@@ -72,3 +72,12 @@ if which herbstclient >/dev/null 2>&1; then
 	alias hc=herbstclient
 fi
 
+case `uname` in
+	Darwin)
+		alias ls='ls -FG'
+		;;
+	Linux)
+		alias ls='ls -F --color=auto'
+		;;
+esac
+
