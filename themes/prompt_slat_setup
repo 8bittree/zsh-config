@@ -63,6 +63,7 @@ prompt_slat_setup () {
 	autoload -Uz colors && colors
 	autoload -Uz vcs_info
 
+	zstyle ':vcs_info:*' enable git
 	zstyle ':vcs_info:git+set-message:*' hooks git-logo
 	zstyle ':vcs_info:*' stagedstr '%F{green}●'
 	zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
