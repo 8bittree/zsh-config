@@ -76,7 +76,7 @@ case `uname` in
 	Darwin)
 		alias ls='ls -FG'
 		;;
-	Linux)
+	Linux|CYGWIN*)
 		alias ls='ls -F --color=auto'
 		;;
 esac
