@@ -1,0 +1,3 @@
+[submodule "completions/rust-lang"]
+	path = completions/rust-lang
+	url = https://github.com/rust-lang/zsh-config.git

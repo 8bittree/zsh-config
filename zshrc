@@ -49,6 +49,9 @@ setopt LIST_TYPES
 # Vary width of list columns to make list more commpact
 setopt LIST_PACKED
 
+# Adds the rust language completions to $fpath
+fpath=(~/.zsh/completions/rust-lang $fpath)
+
 # Load completion
 autoload -U compinit && compinit
 
