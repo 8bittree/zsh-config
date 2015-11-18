@@ -84,3 +84,27 @@ case `uname` in
 		;;
 esac
 
+if which vim >/dev/null 2>&1 && vim --version | grep -q '+clientserver'; then
+	# Ease opening files with an existing Vim instance.
+	# Tries, in order, and skipping the rest once succeeding:
+	#     1. The Vim server specified by the '--sn' option
+	#     2. The Vim server specified by the '$VIM_SERV' variable, if still open
+	#     3. The most recently opened Vim server
+	#     4. A new Vim server named 'VIM'
+	vis() {
+		if [[ "$1" = '--sn' ]] && [[ -n "$2" ]]; then
+			VIM_SERV="$2"
+			shift 2
+		elif [[ -z "$VIM_SERV" ]] || ! vim --serverlist | grep -xq "$VIM_SERV"; then
+			VIM_SERV="$(vim --serverlist | tail -n1)"
+			if [[ -z "$VIM_SERV" ]]; then
+				VIM_SERV=VIM
+			fi
+		fi
+		if [[ -n "$1" ]]; then
+			vim --servername "$VIM_SERV" --remote-tab-silent "$@"
+		else
+			vim --servername "$VIM_SERV"
+		fi
+	}
+fi
