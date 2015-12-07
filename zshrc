@@ -66,6 +66,27 @@ autoload -Uz promptinit && promptinit
 # Sets the prompt theme to slat
 prompt slat
 
+# Update screen window titles to reflect the currently running command,
+# and the current directory if it's just zsh.
+case "$TERM" in
+	screen* )
+		screen_title_preexec() {
+			[[ -n "$WINDOW" ]] && print -Pn "k$2\\"
+		}
+		add-zsh-hook preexec screen_title_preexec
+		screen_title_precmd() {
+			# print "/" instead of a blank for the root directory
+			if [[ "$PWD" = / ]]; then
+				dirname=/
+			else
+				dirname="${${(%):-%~}##*/}"
+			fi
+			[[ -n "$WINDOW" ]] && print -Pn "kzsh:$dirname\\"
+		}
+		add-zsh-hook precmd screen_title_precmd
+		;;
+esac
+
 ###########################################################################
 #                                 Aliases                                 #
 ###########################################################################
