@@ -1,3 +1,6 @@
 [submodule "completions/rust-lang"]
 	path = completions/rust-lang
 	url = https://github.com/rust-lang/zsh-config.git
+[submodule "zsh-syntax-highlighting"]
+	path = zsh-syntax-highlighting
+	url = git://github.com/zsh-users/zsh-syntax-highlighting.git

@@ -129,3 +129,7 @@ if which vim >/dev/null 2>&1 && vim --version | grep -q '+clientserver'; then
 		fi
 	}
 fi
+
+# Load syntax highlighting. Must be after all other commands/functions/
+# aliases/etc.
+source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
