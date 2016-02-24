@@ -4,6 +4,6 @@
 # position.
 typeset -U path
 
-if [[ -a "~/.zshenv_local" ]]; then
-	source "~/.zshenv_local"
+if [[ -a "$HOME/.zshenv_local" ]]; then
+	source "$HOME/.zshenv_local"
 fi
