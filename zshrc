@@ -75,13 +75,11 @@ case "$TERM" in
 		}
 		add-zsh-hook preexec screen_title_preexec
 		screen_title_precmd() {
-			# print "/" instead of a blank for the root directory
-			if [[ "$PWD" = / ]]; then
-				dirname=/
-			else
-				dirname="${${(%):-%~}##*/}"
-			fi
-			[[ -n "$WINDOW" ]] && print -Pn "kzsh:$dirname\\"
+			[[ -n "$WINDOW" ]] && print -Pn "kzsh:${(%):-%1~}\\"
+			#                  Prompt-style expansion (%)
+			#   I have no idea, but removal breaks it    :-
+			#   Current directory (with home abbrev.)      % ~
+			#                   Only the last element       1
 		}
 		add-zsh-hook precmd screen_title_precmd
 		;;
