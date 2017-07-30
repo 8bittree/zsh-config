@@ -50,7 +50,7 @@ setopt LIST_TYPES
 setopt LIST_PACKED
 
 # Adds the rust language completions to $fpath
-fpath=(~/.zsh/completions/rust-lang $fpath)
+fpath=(~/.zsh/completions ~/.zsh/completions/rust-lang $fpath)
 
 # Load completion
 autoload -U compinit && compinit
