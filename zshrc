@@ -34,6 +34,9 @@ setopt AUTO_CD
 # Extended globs are good
 setopt EXTENDED_GLOB
 
+# Glob dotfiles
+setopt GLOB_DOTS
+
 # Check commands for typos and suggest fixes
 setopt CORRECT
 
