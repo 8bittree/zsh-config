@@ -34,6 +34,9 @@ setopt AUTO_CD
 # Extended globs are good
 setopt EXTENDED_GLOB
 
+# Glob dotfiles
+setopt GLOB_DOTS
+
 # Check commands for typos and suggest fixes
 setopt CORRECT
 
@@ -50,7 +53,7 @@ setopt LIST_TYPES
 setopt LIST_PACKED
 
 # Adds the rust language completions to $fpath
-fpath=(~/.zsh/completions/rust-lang $fpath)
+fpath=(~/.zsh/completions ~/.zsh/completions/rust-lang $fpath)
 
 # Load completion
 autoload -U compinit && compinit
