@@ -6,7 +6,7 @@
 #                                 General                                 #
 ###########################################################################
 # History storage lines in memory
-HISTSIZE=1000
+HISTSIZE=10000
 # History storage lines on disk
 SAVEHIST=$HISTSIZE
 # History file location
