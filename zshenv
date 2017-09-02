@@ -4,6 +4,8 @@
 # position.
 typeset -U path
 
+path=($path "$HOME/.zsh/scripts")
+
 if [[ -a "$HOME/.zshenv_local" ]]; then
 	source "$HOME/.zshenv_local"
 fi
