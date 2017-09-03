@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+fps=24
+if [[ "$1" == "--fps" ]]; then
+	shift
+	fps=$1
+	shift
+fi
+
+ffmpeg -i frame%04d.png -vf palettegen palette.png && ffmpeg -framerate "$fps" -i frame%04d.png -i palette.png -lavfi paletteuse -r "$fps" "${1:-output.gif}"
+rm palette.png

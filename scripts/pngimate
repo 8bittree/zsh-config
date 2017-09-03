@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+fps=24
+if [[ "$1" == "--fps" ]]; then
+	shift
+	fps=$1
+	shift
+fi
+
+ffmpeg -framerate "$fps" -i frame%04d.png -r "$fps" -plays 0 "${1:-output.apng}"
